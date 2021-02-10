@@ -140,8 +140,9 @@ Cada corredor poderá escolher outro corredor para ser seu aliado ou inimigo, is
 	inimigo: 'Sargento Bombarda',
 },
 ```
+---
 
-Dick
+**Dick:**
 
 Primeira Rodada:  3/30 (aceleração(4) - debuff da pista(1) + buff aliado(1) - buff inimigo(1))
 
@@ -155,7 +156,9 @@ Quinta Rodada: 18/30 (velocidade(5) - debuff da pista(1) + buff aliado(1))
 
 Sexta Rodada: 23/30 (velocidade(5) - debuff da pista(1) + buff aliado(1))
 
-Penelópe
+---
+
+**Penelópe:**
 
 Primeira Rodada:  4/30 (aceleração(5) - debuff da pista(1))
 
@@ -169,7 +172,9 @@ Quinta Rodada 17/30 (velocidade(4) - debuff da pista(1))
 
 Sexta Rodada: 21/30 (velocidade(4) - debuff da pista(1) + buff posicao-pista(1))
 
-Peter Perfeito
+---
+
+**Peter Perfeito:**
 
 Primeira Rodada:  1/30 (aceleração(2) - debuff da pista(1))
 
