@@ -13,7 +13,7 @@ A corrida consistirá dos seguintes casos de uso:
 
 Teremos alguns tipos de pista, na aplicação, ela deve ser selecionado antes da corrida iniciar, para buscar as pista faremos uma chamada GET para o seguinte endereço:
 
-[***https://gustavobuttenbender.github.io/film-array/data/pistas.json***](https://gustavobuttenbender.github.io/film-array/data/pistas.json)
+[***https://gustavobuttenbender.github.io/film-array/data/pistas.json***](https://gustavobuttenbender.github.io/gus.github/corrida-maluca/pistas.json)
 
 Exemplo do objeto de pista:
 
@@ -46,7 +46,7 @@ posicoesBuffs: Posições nas pistas onde pode ou não conter um buff de velocid
 
 Podemos selecionar os corredores que estarão na corrida, os corredores vão ser os personagens padrão do corrida maluca e podem ser obtidos fazendo uma chamada GET nesse endereço:
 
-[***https://gustavobuttenbender.github.io/film-array/data/personagens.json***](https://gustavobuttenbender.github.io/film-array/data/personagens.json)
+[***https://gustavobuttenbender.github.io/film-array/data/personagens.json***](https://gustavobuttenbender.github.io/gus.github/corrida-maluca/personagens.json)
 
 Exemplo do objeto do corredor:
 

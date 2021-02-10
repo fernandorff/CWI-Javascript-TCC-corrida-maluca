@@ -1,5 +1,5 @@
 {
-  "name": "crescer",
+  "name": "corrida-maluca-js",
   "scripts": {
     "start": "babel-node index.js",
     "test": "jest"
