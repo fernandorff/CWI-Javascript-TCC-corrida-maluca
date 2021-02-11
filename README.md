@@ -19,6 +19,7 @@ Exemplo do objeto de pista:
 
 ```jsx
 {
+  id: 1,
 	nome: 'Himalaia', 
 	tipo: 'MONTANHA',
 	descricao: 'Uma montanha nevada, os corredores devem dar uma volta inteira nela, como existe muita neve eles terão dificuldade em enxergar',
@@ -52,6 +53,7 @@ Exemplo do objeto do corredor:
 
 ```jsx
 {
+  id: 1,
 	nome: 'Dick Vigarista',
 	velocidade: 5,
 	drift: 2, 
@@ -100,11 +102,12 @@ Cada corredor poderá escolher outro corredor para ser seu aliado ou inimigo, is
 // Pista
 
 {
+  id: 1,
 	nome: 'Himalaia', 
 	tipo: 'MONTANHA',
 	descricao: 'Uma montanha nevada, os corredores devem dar uma volta inteira nela, como existe muita neve eles terão dificuldade em enxergar',
 	tamanho: 30,
-	debuff: -2,
+	debuff: -1,
 	posicoesBuffs: [6, 17]
 }
 ```
@@ -113,6 +116,7 @@ Cada corredor poderá escolher outro corredor para ser seu aliado ou inimigo, is
 // Corredores
 
 {
+  id: 1,
 	nome: 'Dick Vigarista',
 	velocidade: 5,
 	drift: 2,
@@ -122,6 +126,7 @@ Cada corredor poderá escolher outro corredor para ser seu aliado ou inimigo, is
 	inimigo: 'Peter Perfeito',
 },
 {
+  id: 6,
 	nome: "Penélope Charmosa",
 	velocidade: 4,
 	drift: 3,
@@ -131,6 +136,7 @@ Cada corredor poderá escolher outro corredor para ser seu aliado ou inimigo, is
 	inimigo: 'Professor Aéreo',
 },
 {
+  id: 10,
 	nome: "Peter Perfeito",
 	velocidade: 7,
 	drift: 1,
