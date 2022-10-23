@@ -8,7 +8,7 @@ import {
   criaPista,
   executarCorrida,
   moverPersonagens,
-} from "../corrida.js";
+} from "../src/corrida.js";
 
 describe("Suite de testes da Corrida Maluca", () => {
   const personagensURL =
