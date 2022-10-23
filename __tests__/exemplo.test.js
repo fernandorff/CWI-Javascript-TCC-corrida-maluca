@@ -1,11 +1,13 @@
 import axios from "axios";
 
 import {
+  aliadoInimigoBuffDebuff,
   calcularVantagem,
   criaCorrida,
   criaPersonagem,
   criaPista,
   executarCorrida,
+  moverPersonagens,
 } from "../corrida.js";
 
 describe("Suite de testes da Corrida Maluca", () => {
@@ -15,21 +17,10 @@ describe("Suite de testes da Corrida Maluca", () => {
   const pistasURL =
     "https://gustavobuttenbender.github.io/gus.github/corrida-maluca/pistas.json";
 
-  // Deve conseguir calcular o buff de posição de pista para 3 corredores
-  // Deve conseguir calcular a próxima posição corretamente se estiver sob o buff de um aliado
-  // Deve conseguir calcular a próxima posição corretamente se estiver sob o debuff de um inimigo
-  // Deve conseguir completar uma corrida com um vencedor
-  // Deve conseguir criar corredor corretamente somente com aliado
-  // Deve conseguir criar corredor corretamente somente com inimigo
-  // Deve conseguir criar corredor corretamente com aliado e inimigo
-  // Deve conseguir calcular as novas posições corretamente de uma rodada para a próxima
-  // Deve impedir que corredor se mova negativamente mesmo se o calculo de velocidade seja negativo
-  // Deve impedir que o Dick Vigarista vença a corrida se estiver a uma rodada de ganhar
-
   // --- Teste 1 -- //
 
   it("Deve conseguir obter o corredor corretamente", async () => {
-    const resposta = await criaPersonagem(personagensURL, 0, 1, 2, 3, 4);
+    const resposta = await criaPersonagem(personagensURL, 0);
 
     expect(resposta).toMatchObject({
       id: 1,
@@ -119,13 +110,131 @@ describe("Suite de testes da Corrida Maluca", () => {
   // --- Teste 6 --- //
 
   it("Deve conseguir calcular o buff de posição de pista para 3 corredores", async () => {
-    const dick = await criaPersonagem(personagensURL, 0);
-    const rocha = await criaPersonagem(personagensURL, 1);
-    const pavor = await criaPersonagem(personagensURL, 2);
+    const dick = await criaPersonagem(personagensURL, 0, true, 1, true, 2);
+    const rocha = await criaPersonagem(personagensURL, 1, true, 0, true, 2);
+    const pavor = await criaPersonagem(personagensURL, 2, true, 0, true, 1);
     const deserto = await criaPista(pistasURL, 2);
 
     const corrida = await criaCorrida(deserto, dick, rocha, pavor);
 
     executarCorrida(corrida);
+
+    expect(rocha.buffPosicao).toBe(3);
+  });
+
+  // --- Teste 7 --- //
+
+  it("Deve conseguir calcular a próxima posição corretamente se estiver sob o buff de um aliado", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, true, 1);
+    const rocha = await criaPersonagem(personagensURL, 1, true, 0);
+    const F1 = await criaPista(pistasURL, 1);
+
+    const corridaF1 = await criaCorrida(F1, dick, rocha);
+
+    aliadoInimigoBuffDebuff(corridaF1);
+
+    moverPersonagens(corridaF1, 0);
+
+    expect(dick.posicao).toBe(8);
+  });
+
+  // --- Teste 8 --- //
+
+  it("Deve conseguir calcular a próxima posição corretamente se estiver sob o debuff de um inimigo", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, false, 0, true, 1);
+    const rocha = await criaPersonagem(personagensURL, 1, false, 0, false, 0);
+    const F1 = await criaPista(pistasURL, 1);
+
+    const corridaF1 = await criaCorrida(F1, dick, rocha);
+
+    aliadoInimigoBuffDebuff(corridaF1);
+
+    moverPersonagens(corridaF1, 0);
+
+    expect(dick.posicao).toBe(4);
+  });
+
+  //  --- Teste 9 --- //
+
+  it("Deve conseguir completar uma corrida com um vencedor", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, true, 1, true, 2);
+    const rocha = await criaPersonagem(personagensURL, 1, true, 0, true, 2);
+    const pavor = await criaPersonagem(personagensURL, 2, true, 0, true, 1);
+    const deserto = await criaPista(pistasURL, 2);
+
+    const corrida = await criaCorrida(deserto, dick, rocha, pavor);
+
+    const vencedor = await executarCorrida(corrida);
+
+    expect(vencedor.nome).toBe("Irmãos Pavor");
+  });
+
+  // --- Teste 10 --- //
+
+  it("Deve conseguir criar corredor corretamente somente com aliado", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, true, 1);
+    expect(dick.inimigo).toBe("");
+  });
+
+  // --- Teste 11 --- //
+
+  it("Deve conseguir criar corredor corretamente somente com inimigo", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, false, 1, true, 1);
+    expect(dick.aliado).toBe("");
+  });
+
+  // --- Teste 12 --- //
+
+  it("Deve conseguir criar corredor corretamente somente com inimigo", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, true, 1, true, 2);
+    expect(dick.aliado + " e " + dick.inimigo).toBe(
+      "Irmãos Rocha e Irmãos Pavor"
+    );
+  });
+
+  // --- Teste 13 --- //
+
+  it("Deve conseguir calcular as novas posições corretamente de uma rodada para a próxima", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, false, 0, true, 1);
+    const rocha = await criaPersonagem(personagensURL, 1, false, 0, false, 0);
+    const F1 = await criaPista(pistasURL, 1);
+
+    const corridaF1 = await criaCorrida(F1, dick, rocha);
+
+    aliadoInimigoBuffDebuff(corridaF1);
+
+    moverPersonagens(corridaF1, 0);
+
+    console.log(dick.posicao, rocha.posicao);
+
+    expect(dick.posicao + " - " + rocha.posicao).toBe("4 - 2");
+  });
+
+  /// --- Teste 14 --- //
+
+  it("Deve impedir que corredor se mova negativamente mesmo se o calculo de velocidade seja negativo", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, false, 0, false, 0);
+    const rocha = await criaPersonagem(personagensURL, 1, false, 0, true, 0);
+    const F1 = await criaPista(pistasURL, 1);
+
+    const corridaF1 = await criaCorrida(F1, dick, rocha);
+
+    aliadoInimigoBuffDebuff(corridaF1);
+
+    moverPersonagens(corridaF1, 0);
+
+    expect(rocha.posicao).toBe(0);
+  });
+
+  it("Deve impedir que o Dick Vigarista vença a corrida se estiver a uma rodada de ganhar", async () => {
+    const dick = await criaPersonagem(personagensURL, 0, false, 0, false, 0);
+    const rocha = await criaPersonagem(personagensURL, 1, false, 0, true, 0);
+    const F1 = await criaPista(pistasURL, 1);
+
+    const corridaF1 = await criaCorrida(F1, dick, rocha);
+
+    const vencedor = await executarCorrida(corridaF1);
+
+    expect(vencedor.nome).toBe("Irmãos Rocha");
   });
 });
