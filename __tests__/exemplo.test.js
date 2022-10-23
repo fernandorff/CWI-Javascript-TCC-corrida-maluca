@@ -185,7 +185,7 @@ describe("Suite de testes da Corrida Maluca", () => {
 
   // --- Teste 12 --- //
 
-  it("Deve conseguir criar corredor corretamente somente com inimigo", async () => {
+  it("Deve conseguir criar corredor corretamente com aliado e inimigo", async () => {
     const dick = await criaPersonagem(personagensURL, 0, true, 1, true, 2);
     expect(dick.aliado + " e " + dick.inimigo).toBe(
       "Irmãos Rocha e Irmãos Pavor"
@@ -227,7 +227,14 @@ describe("Suite de testes da Corrida Maluca", () => {
   });
 
   it("Deve impedir que o Dick Vigarista vença a corrida se estiver a uma rodada de ganhar", async () => {
-    const dick = await criaPersonagem(personagensURL, 0, false, 0, false, 0);
+    const dick = await criaPersonagem(
+      personagensURL,
+      0,
+      false,
+      Math.floor(Math.random() * 10),
+      false,
+      0
+    );
     const rocha = await criaPersonagem(personagensURL, 1, false, 0, true, 0);
     const F1 = await criaPista(pistasURL, 1);
 
@@ -236,5 +243,122 @@ describe("Suite de testes da Corrida Maluca", () => {
     const vencedor = await executarCorrida(corridaF1);
 
     expect(vencedor.nome).toBe("Irmãos Rocha");
+  });
+
+  it("Corrida totalmente aleatoria", async () => {
+    const dickVigarista = await criaPersonagem(
+      personagensURL,
+      0,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+
+    const irmaosRocha = await criaPersonagem(
+      personagensURL,
+      1,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const irmaosPavor = await criaPersonagem(
+      personagensURL,
+      2,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const professorAereo = await criaPersonagem(
+      personagensURL,
+      3,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const baraoVermelho = await criaPersonagem(
+      personagensURL,
+      4,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const penelopeCharmosa = await criaPersonagem(
+      personagensURL,
+      5,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const sargentoBombarda = await criaPersonagem(
+      personagensURL,
+      6,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const quadrilhaDaMorte = await criaPersonagem(
+      personagensURL,
+      7,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const tioTomas = await criaPersonagem(
+      personagensURL,
+      8,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const peterPerfeito = await criaPersonagem(
+      personagensURL,
+      9,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+    const rufusLenhador = await criaPersonagem(
+      personagensURL,
+      10,
+      true,
+      Math.floor(Math.random() * 11),
+      true,
+      Math.floor(Math.random() * 11)
+    );
+
+    const pistaAleatoria = await criaPista(
+      pistasURL,
+      Math.floor(Math.random() * 8)
+    );
+
+    const corridaAleatoria = await criaCorrida(
+      pistaAleatoria,
+      dickVigarista,
+      irmaosRocha,
+      irmaosPavor,
+      professorAereo,
+      baraoVermelho,
+      penelopeCharmosa,
+      sargentoBombarda,
+      quadrilhaDaMorte,
+      tioTomas,
+      peterPerfeito,
+      rufusLenhador
+    );
+
+    const vencedor = await executarCorrida(corridaAleatoria);
+
+    console.log(`Grande Premio da ${pistaAleatoria.nome}! 
+    O vencedor é -> ${vencedor.nome}`);
   });
 });
