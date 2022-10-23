@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/101672271/197370205-c719232c-796a-4787-8e2a-3bd5ba98b009.png)
+
 # TCC - Corrida Maluca
 
 Como pudemos ver no decorrer dos vídeos e exercícios o Javascript consegue ser uma linguagem bem doida também, e para fechar o módulo com chave de ouro nada melhor do que desenvolvermos um aplicação da Corrida Maluca.
